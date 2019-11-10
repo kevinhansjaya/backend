@@ -1,5 +1,8 @@
 const express = require('express');
 const router = express.Router();
+//auth add
+const auth = require('../../middleware/Auth');
+//end auth
 
 //item model
 const Item = require('../../models/Item');
@@ -9,14 +12,15 @@ const Item = require('../../models/Item');
 //@access Public
 router.get('/', (req, res, next)=>{
     Item.find()
-        .sort({date: -1}) //descending
+        .sort({date: -1}) //descending s
         .then(item => res.json(item));
 });
-
+ 
 //@route  POST api/item
 //@desc   Create an item
-//@access Public
-router.post('/', (req, res, next)=>{
+//@access Private
+//adding auth for validation
+router.post('/', auth,(req, res, next)=>{
     const newItem= new Item({
         name: req.body.name
     });
@@ -25,8 +29,9 @@ router.post('/', (req, res, next)=>{
 
 //@route  Delete api/item/:id
 //@desc   Delete an item
-//@access Public
-router.delete('/:id', (req, res, next)=>{
+//@access Private
+//adding auth for validation
+router.delete('/:id', auth,(req, res, next)=>{
     console.log(req.params.id);
     Item.findById(req.params.id)
 

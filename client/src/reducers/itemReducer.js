@@ -15,7 +15,7 @@ const initialState ={
 export default function(state = initialState,action){
     switch (action.type){
         case GET_ITEMS:
-            console.log('reducer get');
+            console.log('return GET_ITEMS in itemReducer');
             return{
                 // ...state
                 ...state,
@@ -36,6 +36,7 @@ export default function(state = initialState,action){
             items:[action.payload,...state.items]
         };
         case ITEMS_LOADING:
+        console.log( '3. set loading to true in itemReducer');
         return{
             ...state,
             loading:true
